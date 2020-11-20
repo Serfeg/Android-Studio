@@ -3,6 +3,7 @@ package com.example.myapplication;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
         Log.i("GSON", "Имя: " + murzik.name + "\nВозраст: " + murzik.age);
 
         TextView cat_tv = findViewById(R.id.cat_tv);
-        cat_tv.setText("Имя: " + murzik.name + "\nВозраст: " + murzik.age);
+        cat_tv.setText("Имя: " + murzik.name + " Возраст: " + murzik.age + " Цвет: ");
+        View vColor = findViewById(R.id.vColor);
+        vColor.setBackgroundColor(murzik.color);
     }
 }
