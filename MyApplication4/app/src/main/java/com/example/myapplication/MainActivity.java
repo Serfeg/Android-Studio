@@ -23,6 +23,8 @@ public class MainActivity extends AppCompatActivity {
         Gson gson = builder.create();
         Cat murzik = gson.fromJson(jsonText, Cat.class);
         Log.i("GSON", "Имя: " + murzik.name + "\nВозраст: " + murzik.age);
-        
+
+        TextView cat_tv = findViewById(R.id.cat_tv);
+        cat_tv.setText("Имя: " + murzik.name + "\nВозраст: " + murzik.age);
     }
 }
