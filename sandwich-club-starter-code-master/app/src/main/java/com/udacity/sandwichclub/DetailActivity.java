@@ -3,7 +3,9 @@ package com.udacity.sandwichclub;
 import android.content.Intent;
 import android.os.Bundle;
 //import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -52,7 +54,7 @@ public class DetailActivity extends AppCompatActivity {
             return;
         }
 
-        populateUI();
+        populateUI(sandwich);
         Picasso.with(this)
                 .load(sandwich.getImage())
                 .into(ingredientsIv);
@@ -65,7 +67,26 @@ public class DetailActivity extends AppCompatActivity {
         Toast.makeText(this, R.string.detail_error_message, Toast.LENGTH_SHORT).show();
     }
 
-    private void populateUI() {
+    private void populateUI(Sandwich sandwich) {
+        TextView tv_alsoKn = findViewById(R.id.also_known_tv);
+        TextView tv_origin = findViewById(R.id.origin_tv);
+        TextView tv_desc = findViewById(R.id.description_tv);
+        TextView tv_ingr = findViewById(R.id.ingredients_tv);
 
+        tv_desc.setText(sandwich.getDescription());
+        tv_origin.setText(sandwich.getPlaceOfOrigin());
+
+        if(sandwich.getAlsoKnownAs().size()!=0) {
+            for (String string : sandwich.getAlsoKnownAs()) {
+                tv_alsoKn.append(string + "\n");
+            }
+            tv_alsoKn.setText(tv_alsoKn.getText().toString().substring(0, tv_alsoKn.getText().length() - 1));
+        } else {
+            tv_alsoKn.setVisibility(View.GONE);
+        }
+
+        for(String string: sandwich.getIngredients()){
+            tv_ingr.append(string + "\n");
+        }
     }
 }
