@@ -2,10 +2,12 @@ package a.event_handling;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -66,6 +68,14 @@ public class MainActivity extends AppCompatActivity {
                 second_tv.setVisibility(View.VISIBLE);
                 first_tv.setText("Пустое поле");
                 second_tv.setText("Пустое поле");
+                ConstraintLayout myLayout = findViewById(R.id.activity_main);
+                myLayout.setOnTouchListener(new ConstraintLayout.OnTouchListener() {
+                    public boolean onTouch(View v, MotionEvent m) {
+                        handleTouch(m);
+                        return true;
+                    }
+                }
+                );
                 return true;
             case R.id.com_gest:
                 setTitle("CommonGestures");
@@ -76,5 +86,46 @@ public class MainActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    void handleTouch(MotionEvent m) {
+        int pointerCount = m.getPointerCount();
+
+        for (int i = 0; i < pointerCount; i++) {
+            int x = (int) m.getX(i);
+            int y = (int) m.getY(i);
+            int id = m.getPointerId(i);
+            int action = m.getActionMasked();
+            int actionIndex = m.getActionIndex();
+            String actionString;
+
+
+            switch (action) {
+                case MotionEvent.ACTION_DOWN:
+                    actionString = "DOWN";
+                    break;
+                case MotionEvent.ACTION_UP:
+                    actionString = "UP";
+                    break;
+                case MotionEvent.ACTION_POINTER_DOWN:
+                    actionString = "PNTR DOWN";
+                    break;
+                case MotionEvent.ACTION_POINTER_UP:
+                    actionString = "PNTR UP";
+                    break;
+                case MotionEvent.ACTION_MOVE:
+                    actionString = "MOVE";
+                    break;
+                default:
+                    actionString = "";
+            }
+
+            String touchStatus = "Action: " + actionString + " Index: " +
+                    actionIndex + " ID: " + id + " X: " + x + " Y: " + y;
+            if (id == 0)
+                second_tv.setText(touchStatus);
+            else
+                first_tv.setText(touchStatus);
+        }
     }
 }
