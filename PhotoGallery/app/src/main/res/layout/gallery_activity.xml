@@ -10,7 +10,6 @@
         android:id="@+id/rView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layoutManager="GridLayoutManager"
         tools:layout_editor_absoluteX="156dp"
         tools:layout_editor_absoluteY="99dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
