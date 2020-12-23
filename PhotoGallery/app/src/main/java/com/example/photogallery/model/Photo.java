@@ -10,7 +10,7 @@ public class Photo {
     public Integer ispublic;
     public Integer isfriend;
     public Integer isfamily;
-    public String urlS;
-    public String heightS;
-    public String widthS;
+    public String url_s;
+    public String height_s;
+    public String width_s;
 }
