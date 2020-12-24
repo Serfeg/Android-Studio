@@ -24,19 +24,21 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.ViewHolder>{
     PhotosDao photosDao;
     Context context;
     boolean del;
-    View view;
+    RecyclerView rView;
+    PhotoAdapter adapter;
 
-    public PhotoAdapter(List<Photo> photos, Context contxt, PhotosDao dao, boolean delete){
+    public PhotoAdapter(List<Photo> photos, Context contxt, PhotosDao dao, boolean delete, RecyclerView recyclerView){
         ph = photos;
         context = contxt;
         photosDao = dao;
         del = delete;
+        rView = recyclerView;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
-        view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.rview_layout, viewGroup, false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.rview_layout, viewGroup, false);
         return new ViewHolder(view);
     }
 
@@ -69,6 +71,9 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.ViewHolder>{
                     }
                     else if (del == true) {
                         photosDao.deletePhoto(photo);
+                        ph = photosDao.LoadAll();
+                        adapter = new PhotoAdapter(ph,context, photosDao, del, rView);
+                        rView.setAdapter(adapter);
                         Toast.makeText(context, "Successful Delete", Toast.LENGTH_SHORT).show();
                     }
                 }

@@ -53,7 +53,7 @@ public class PhotoGallery extends AppCompatActivity {
             public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
                 resp = response.body();
                 ph = resp.getPhotos().getPhoto();
-                adapter = new PhotoAdapter(ph,context,dao,del);
+                adapter = new PhotoAdapter(ph,context,dao,del, rView);
                 rView.setAdapter(adapter);
             }
 
@@ -81,7 +81,7 @@ public class PhotoGallery extends AppCompatActivity {
                     public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
                         resp = response.body();
                         ph = resp.getPhotos().getPhoto();
-                        adapter = new PhotoAdapter(ph,context,dao,del);
+                        adapter = new PhotoAdapter(ph,context,dao,del, rView);
                         rView.setAdapter(adapter);
                     }
 
@@ -113,7 +113,7 @@ public class PhotoGallery extends AppCompatActivity {
                     public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
                         resp = response.body();
                         ph = resp.getPhotos().getPhoto();
-                        adapter = new PhotoAdapter(ph,context,dao,del);
+                        adapter = new PhotoAdapter(ph,context,dao,del,rView);
                         rView.setAdapter(adapter);
                     }
 
@@ -126,7 +126,7 @@ public class PhotoGallery extends AppCompatActivity {
             case R.id.LocalDB:
                 del = true;
                 ph = dao.LoadAll();
-                adapter = new PhotoAdapter(ph,context,dao,del);
+                adapter = new PhotoAdapter(ph,context,dao,del,rView);
                 rView.setAdapter(adapter);
                 return true;
         }
