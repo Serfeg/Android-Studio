@@ -23,17 +23,20 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.ViewHolder>{
     private TextView img_tv;
     PhotosDao photosDao;
     Context context;
+    boolean del;
+    View view;
 
-    public PhotoAdapter(List<Photo> photos, Context contxt, PhotosDao dao){
+    public PhotoAdapter(List<Photo> photos, Context contxt, PhotosDao dao, boolean delete){
         ph = photos;
         context = contxt;
         photosDao = dao;
+        del = delete;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.rview_layout, viewGroup, false);
+        view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.rview_layout, viewGroup, false);
         return new ViewHolder(view);
     }
 
@@ -60,8 +63,14 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.ViewHolder>{
                 public void onClick(View v) {
                     int id = getLayoutPosition();
                     Photo photo = ph.get(id);
-                    photosDao.insertPhoto(photo);
-                    Toast.makeText(context, "Successful", Toast.LENGTH_SHORT).show();
+                    if (del == false) {
+                        photosDao.insertPhoto(photo);
+                        Toast.makeText(context, "Successful Insert", Toast.LENGTH_SHORT).show();
+                    }
+                    else if (del == true) {
+                        photosDao.deletePhoto(photo);
+                        Toast.makeText(context, "Successful Delete", Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
         }

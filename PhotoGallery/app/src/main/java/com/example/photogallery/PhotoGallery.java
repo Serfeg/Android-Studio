@@ -35,6 +35,7 @@ public class PhotoGallery extends AppCompatActivity {
     PhotosDB db;
     PhotosDao dao;
     List<Photo> ph;
+    boolean del = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,7 +53,7 @@ public class PhotoGallery extends AppCompatActivity {
             public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
                 resp = response.body();
                 ph = resp.getPhotos().getPhoto();
-                adapter = new PhotoAdapter(ph,context,dao);
+                adapter = new PhotoAdapter(ph,context,dao,del);
                 rView.setAdapter(adapter);
             }
 
@@ -80,7 +81,7 @@ public class PhotoGallery extends AppCompatActivity {
                     public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
                         resp = response.body();
                         ph = resp.getPhotos().getPhoto();
-                        adapter = new PhotoAdapter(ph,context,dao);
+                        adapter = new PhotoAdapter(ph,context,dao,del);
                         rView.setAdapter(adapter);
                     }
 
@@ -105,13 +106,14 @@ public class PhotoGallery extends AppCompatActivity {
         int id = item.getItemId();
         switch (id) {
             case R.id.NoLocalDB:
+                del = false;
                 Retrofit retrofit = ServiceAPI.getRetrofit();
                 retrofit.create(FlickrAPI.class).getRecent().enqueue(new Callback<Response>() {
                     @Override
                     public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
                         resp = response.body();
                         ph = resp.getPhotos().getPhoto();
-                        adapter = new PhotoAdapter(ph,context,dao);
+                        adapter = new PhotoAdapter(ph,context,dao,del);
                         rView.setAdapter(adapter);
                     }
 
@@ -122,8 +124,9 @@ public class PhotoGallery extends AppCompatActivity {
                 });
                 return true;
             case R.id.LocalDB:
+                del = true;
                 ph = dao.LoadAll();
-                adapter = new PhotoAdapter(ph,context,dao);
+                adapter = new PhotoAdapter(ph,context,dao,del);
                 rView.setAdapter(adapter);
                 return true;
         }
