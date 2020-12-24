@@ -35,7 +35,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.ViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        String txt = ph.get(position).getOwner();
+        String txt = ph.get(position).getTitle();
         img_tv.setText(txt);
         Picasso.with(context).load(ph.get(position).getUrl_s()).into(img);
     }
