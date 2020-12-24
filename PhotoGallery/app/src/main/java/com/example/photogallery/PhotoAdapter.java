@@ -6,10 +6,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.photogallery.db.PhotosDao;
 import com.example.photogallery.model.Photo;
 import com.squareup.picasso.Picasso;
 
@@ -19,11 +21,13 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.ViewHolder>{
     private List<Photo> ph;
     private ImageView img;
     private TextView img_tv;
+    PhotosDao photosDao;
     Context context;
 
-    public PhotoAdapter(List<Photo> photos, Context contxt){
+    public PhotoAdapter(List<Photo> photos, Context contxt, PhotosDao dao){
         ph = photos;
         context = contxt;
+        photosDao = dao;
     }
 
     @NonNull
@@ -51,6 +55,15 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.ViewHolder>{
             super(itemView);
             img = itemView.findViewById(R.id.imageView);
             img_tv = itemView.findViewById(R.id.img_tv);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int id = getLayoutPosition();
+                    Photo photo = ph.get(id);
+                    photosDao.insertPhoto(photo);
+                    Toast.makeText(context, "Successful", Toast.LENGTH_SHORT).show();
+                }
+            });
         }
     }
 

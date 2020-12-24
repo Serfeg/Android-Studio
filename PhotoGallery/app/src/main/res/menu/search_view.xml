@@ -8,4 +8,10 @@
         android:title="Search"
         app:actionViewClass="android.widget.SearchView"
         app:showAsAction = "always"/>
+    <item
+        android:id="@+id/NoLocalDB"
+        android:title="NoLocalDB" />
+    <item
+        android:id="@+id/LocalDB"
+        android:title="LocalDB" />
 </menu>
